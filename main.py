@@ -18,23 +18,32 @@ lastTemp = -1
 changeFactor = 2.5
 
 if(__name__ == '__main__'):
-	print("\x1b[01;34mTesting fan control\x1b[0m")
-	if(not trySetFanControlEnabled(True)):
-		print("\x1b[01;31mUnable to enable fan control!\x1b[0m")
-		quit(1)
-	legacyFanSpeed = shouldUseLegacyFanSpeed()
-	if(legacyFanSpeed):
-		print("\x1b[01;33mUsing legacy fan speed!\x1b[0m")
-	if(not trySetFanSpeed(100, legacy=legacyFanSpeed)):
-		print("\x1b[01;31mUnable to set fan speed!\x1b[0m")
-		trySetFanControlEnabled(False)
-		quit(1)
+	try:
+		print("\x1b[01;34mTesting fan control\x1b[0m")
+		res = trySetFanControlEnabled(True)
+		if(not res[0]):
+			print("\x1b[01;31mUnable to enable fan control!\x1b[0m")
+			print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
+			quit(1)
+		legacyFanSpeed = shouldUseLegacyFanSpeed()
+		if(legacyFanSpeed):
+			print("\x1b[01;33mUsing legacy fan speed!\x1b[0m")
+		res = trySetFanSpeed(100, legacy=legacyFanSpeed)
+		if(not res[0]):
+			print("\x1b[01;31mUnable to set fan speed!\x1b[0m")
+			print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
+			trySetFanControlEnabled(False)
+			quit(1)
+	except FileNotFoundError:
+		print("\x1b[01;31m;NVIDIA drivers are not installed, this tool only works with the proprietary NVIDIA drivers\x1b[0m")
 	print("\x1b[01;32mFan control works\x1b[0m")
 	lastTemp = getGpuTemp() + 1
 	def shutdownHook():
 		print("\x1b[01;33mShutting down!\x1b[0m")
-		if(not trySetFanControlEnabled(False)):
+		res = trySetFanControlEnabled(False)
+		if(not res[0]):
 			print("\x1b[01;31mUnable to disable fan control\x1b[0m")
+			print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
 		else:
 			print("\x1b[01;32mDisabled fan control\x1b[0m")
 	atexit.register(shutdownHook)
@@ -51,8 +60,10 @@ if(__name__ == '__main__'):
 			if(change > 0):
 				estNextTemp = temp + change * changeFactor
 			print("\x1b[01;33mFan speed thus changed to " + str(speed) + "% ("+ str(temp) + " deg C, " + str(estNextTemp) + " estimated next)\x1b[0m")
-			if(not trySetFanSpeed(estNextTemp, legacy=legacyFanSpeed)):
+			res = trySetFanSpeed(estNextTemp, legacy=legacyFanSpeed)
+			if(not res[0]):
 				print("\x1b[01;31mFailed to set fan speed, exiting!\x1b[0m")
+				print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
 				quit(-1)
 			lastTemp = temp
 		sleep(1)

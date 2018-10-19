@@ -1,6 +1,6 @@
 from time import sleep
 from socket import gethostname
-import subprocess
+import subprocess, os
 
 _hostName = gethostname()
 
@@ -8,6 +8,9 @@ _hostName = gethostname()
 def execCmd(cmd, encoding='utf-8'):
 	p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	return (int(p.returncode), str(p.stdout.decode(encoding)), str(p.stderr.decode(encoding)))
+#Gets the current XDisplat the process is using
+def getXDisplay():
+	return os.environ['DISPLAY']
 #Gets the GPU's temperature using 'nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader'
 def getGpuTemp(gpu=0):
 	res = execCmd(['nvidia-smi', '-i', str(gpu), '--query-gpu=temperature.gpu', '--format=csv,noheader'])
@@ -28,8 +31,9 @@ def trySetNvidiaSetting(attrLoc, attrName, val):
 	attrArg = '[' + attrLoc + ']/' + attrName + '=' + val
 	result = execCmd(['nvidia-settings', '-a', attrArg])
 	cout = result[1].strip().replace(' ', '')
-	check = 'Attribute\'' + attrName + '\'(' + _hostName + ':0[' + attrLoc + '])assignedvalue' + val + '.'
-	return cout == check
+	display = getXDisplay()
+	check = 'Attribute\'' + attrName + '\'(' + _hostName + display + '[' + attrLoc + '])assignedvalue' + val + '.'
+	return (cout == check, cout, check)
 #Enables/Disables fan control of the nvidia card
 def trySetFanControlEnabled(enabled, gpu=0):
 	state = '0'

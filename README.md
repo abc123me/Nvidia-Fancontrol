@@ -11,9 +11,9 @@ Currently it is in its very early stages but still usable
 You can modify main.py to make a custom fan curve, or use a different GPU/Fan.
 
 ## Tested configurations
-Ubuntu with GTX760 and GTX1060 6GB - No problems
-LXDE with GTX1060 6GB - No problems
-Everything else is untested, however it will probably work
+- Ubuntu with GTX760 and GTX1060 6GB (No problems)
+- LXDE with GTX1060 6GB (No problems)
+- Everything else is untested (however it will probably work)
 
 # Documentation
 Refer to [nvfan.py](https://github.com/abc123me/Nividia-Fancontrol/blob/master/nvfan.py)

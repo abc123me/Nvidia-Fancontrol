@@ -18,12 +18,16 @@ lastTemp = -1
 changeFactor = 2.5
 
 if(__name__ == '__main__'):
+	import sys
+	if "-v" in sys.argv:
+		setVerboseExecution(True)
+		print("\x1b[01;33mVerbose execution enabled!\x1b[0m")
 	try:
 		print("\x1b[01;34mTesting fan control\x1b[0m")
 		res = trySetFanControlEnabled(True)
 		if(not res[0]):
 			print("\x1b[01;31mUnable to enable fan control!\x1b[0m")
-			print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
+			print("\x1b[01;31mReason: %s != %s %s\x1b[0m" % (res[1], res[2], res[3]));
 			quit(1)
 		legacyFanSpeed = shouldUseLegacyFanSpeed()
 		if(legacyFanSpeed):

@@ -6,10 +6,9 @@ Currently it is in its very early stages but still usable
 (I'm working on making it better)
 
 ## Usage
-`python3 main.py` No special privledges required!
-
-`python3 main.py -v` Same as before but launches it in verbose mode
-
+- `python3 main.py` No special privledges required!
+- `python3 main.py -v` Same as before but launches it in verbose mode
+### Modifications
 You can modify main.py to make a custom fan curve, or use a different GPU/Fan.
 
 ## Tested configurations

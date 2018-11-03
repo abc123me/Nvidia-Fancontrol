@@ -7,7 +7,9 @@ Currently it is in its very early stages but still usable
 
 ## Usage
 `python3 main.py` No special privledges required!
+
 `python3 main.py -v` Same as before but launches it in verbose mode
+
 You can modify main.py to make a custom fan curve, or use a different GPU/Fan.
 
 ## Tested configurations

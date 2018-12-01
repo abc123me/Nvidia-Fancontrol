@@ -6,11 +6,11 @@ import atexit
 #Some default stuff so you can use this script out-of-the-box
 defaultFanCurve = [
 	(20, 0),
-	(30, 10),
+	(30, 20),
 	(35, 20),
-	(40, 30),
-	(45, 40),
-	(60, 60),
+	(40, 25),
+	(45, 30),
+	(60, 50),
 	(75, 80),
 	(80, 100)
 ]
@@ -66,13 +66,13 @@ if(__name__ == '__main__'):
 				if(change > 0):
 					estNextTemp = temp + change * changeFactor
 				print("\x1b[01;33mFan speed thus changed to " + str(speed) + "% ("+ str(temp) + " deg C, " + str(estNextTemp) + " estimated next)\x1b[0m")
-				res = trySetFanSpeed(estNextTemp, legacy=legacyFanSpeed)
+				res = trySetFanSpeed(speed, legacy=legacyFanSpeed)
 				if(not res[0]):
 					print("\x1b[01;31mFailed to set fan speed, exiting!\x1b[0m")
 					print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
 					quit(-1)
 				lastTemp = temp
-			sleep(1)
+			sleep(5)
 	except KeyboardInterrupt:
 		print("\x1b[01;31mExiting now!\x1b[0m")
 		quit(1)

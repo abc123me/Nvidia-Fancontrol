@@ -31,7 +31,9 @@ def getGpuTemp(gpu=0):
 #Returns the current driver version
 def getDriverVersion(gpu=0):
 	res = execCmd(['nvidia-smi', '-i', str(gpu), '--query-gpu=driver_version', '--format=csv,noheader'])
-	return float(res[1])
+	versionSplit = res[1].split('.')
+#Only use major and minor version, ignore build number.
+	return float(versionSplit[0] + '.' + versionSplit[1])
 #Trys to set a nvidia setting using the nvidia-settings command
 #Checks the stdout for a success message
 def trySetNvidiaSetting(attrLoc, attrName, val):

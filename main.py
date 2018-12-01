@@ -56,7 +56,6 @@ if(__name__ == '__main__'):
 		while True:
 			temp = getGpuTemp()
 			if(temp != lastTemp):
-				speed = interpFanCurve(defaultFanCurve, temp)
 				change = temp - lastTemp
 				col = "\x1b[01;31m"
 				if(change < 0):
@@ -65,6 +64,7 @@ if(__name__ == '__main__'):
 				estNextTemp = temp
 				if(change > 0):
 					estNextTemp = temp + change * changeFactor
+				speed = interpFanCurve(defaultFanCurve, estNextTemp)
 				print("\x1b[01;33mFan speed thus changed to " + str(speed) + "% ("+ str(temp) + " deg C, " + str(estNextTemp) + " estimated next)\x1b[0m")
 				res = trySetFanSpeed(speed, legacy=legacyFanSpeed)
 				if(not res[0]):
@@ -72,7 +72,7 @@ if(__name__ == '__main__'):
 					print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
 					quit(-1)
 				lastTemp = temp
-			sleep(5)
+			sleep(3)
 	except KeyboardInterrupt:
 		print("\x1b[01;31mExiting now!\x1b[0m")
 		quit(1)

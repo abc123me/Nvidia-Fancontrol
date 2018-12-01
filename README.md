@@ -18,3 +18,6 @@ You can modify main.py to make a custom fan curve, or use a different GPU/Fan.
 
 # Documentation
 Refer to [nvfan.py](https://github.com/abc123me/Nividia-Fancontrol/blob/master/nvfan.py)
+
+# Thanks to
+[mstrobl2](https://github.com/mstrobl2)

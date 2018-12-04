@@ -7,7 +7,7 @@ Currently it is in its very early stages but still usable
 ### TODO
 - Rewrite in C++ (in progress)
   - Why? I already have a nice Thinkpad fan control program that I want it to be merged with
-  - Also python is stupid, and I don't like it for big projects
+  - Also I think python is stupid, and I don't like using it for big projects
 - Make a daemon or some automatic-startup script which would run quiet (non verbose)
 - Java GUI for controlling said daemon aswell as nice fan speed over time plotting using my graphing library
 

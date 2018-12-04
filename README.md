@@ -6,7 +6,6 @@ Currently it is in its very early stages but still usable
 (I'm working on making it better)
 ### TODO
 - Rewrite in C++ (in progress)
-- Test it on more cards, I have a GTX 760 and 1060 I can use but would hope to have some users tell me what they're using.
 - Make a daemon or some automatic-startup script which would run quiet (non verbose)
 - Java GUI for controlling said daemon aswell as nice fan speed over time plotting using my graphing library
 

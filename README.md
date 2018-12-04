@@ -16,7 +16,8 @@ Currently it is in its very early stages but still usable
 - `python3 main.py` No special privledges required!
 - `python3 main.py -v` Same as before but launches it in verbose mode
 ### Modifications
-You can modify main.py to make a custom fan curve, or use a different GPU/Fan.
+You can modify main.py to make a custom fan curve, or use a different GPU/Fan.<br>
+But please don't commit these changes, because the fan curve is already decent!
 
 ## Tested configurations
 - Ubuntu with GTX760 and GTX1060 6GB (No problems)

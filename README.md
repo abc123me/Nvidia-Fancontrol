@@ -5,9 +5,10 @@ It's a script that controls the fan on a nvidia graphics card
 Currently it is in its very early stages but still usable
 (I'm working on making it better)
 ### TODO
-- Rewrite in C++ (in progress)
-  - Why? I already have a nice Thinkpad fan control program that I want it to be merged with
-  - Also I think python is stupid, and I don't like using it for big projects
+- Rewrite in C/C++ (in progress)
+  - I already have a nice Thinkpad fan control program that I want it to be merged with
+  - I think python is stupid, and I don't like using it for big projects due to its messiness
+  - C++, C, and Assembly are for fan control scripts - not python
 - Make a daemon or some automatic-startup script which would run quiet (non verbose)
 - Java GUI for controlling said daemon aswell as nice fan speed over time plotting using my graphing library
 

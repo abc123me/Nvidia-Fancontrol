@@ -1,4 +1,4 @@
-# Nividia-Fancontrol
+# Nvidia-Fancontrol
 It's a script that controls the fan on a nvidia graphics card
 
 ## Progress

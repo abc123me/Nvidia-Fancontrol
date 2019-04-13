@@ -6,16 +6,16 @@ import atexit
 #Some default stuff so you can use this script out-of-the-box
 defaultFanCurve = [
 	(20, 0),
-	(30, 20),
-	(35, 20),
-	(40, 25),
-	(45, 30),
-	(60, 50),
-	(75, 80),
-	(80, 100)
+	(30, 0),
+	(35, 0),
+	(40, 30),
+	(50, 50),
+	(60, 60),
+	(70, 70),
+	(80, 80)
 ]
 lastTemp = -1
-changeFactor = 2.5
+changeFactor = 1.3
 
 if(__name__ == '__main__'):
 	import sys
@@ -32,7 +32,7 @@ if(__name__ == '__main__'):
 		legacyFanSpeed = shouldUseLegacyFanSpeed()
 		if(legacyFanSpeed):
 			print("\x1b[01;33mUsing legacy fan speed!\x1b[0m")
-		res = trySetFanSpeed(100, legacy=legacyFanSpeed)
+		res = trySetFanSpeed(90, legacy=legacyFanSpeed)
 		if(not res[0]):
 			print("\x1b[01;31mUnable to set fan speed!\x1b[0m")
 			print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
@@ -66,13 +66,19 @@ if(__name__ == '__main__'):
 					estNextTemp = temp + change * changeFactor
 				speed = interpFanCurve(defaultFanCurve, estNextTemp)
 				print("\x1b[01;33mFan speed thus changed to " + str(speed) + "% ("+ str(temp) + " deg C, " + str(estNextTemp) + " estimated next)\x1b[0m")
-				res = trySetFanSpeed(speed, legacy=legacyFanSpeed)
+				res = trySetFanSpeed(speed, fan=0, legacy=legacyFanSpeed)
+				if(not res[0]):
+					print("\x1b[01;31mFailed to set fan speed, exiting!\x1b[0m")
+					print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
+					quit(-1)
+
+				res = trySetFanSpeed(speed, fan=1, legacy=legacyFanSpeed)
 				if(not res[0]):
 					print("\x1b[01;31mFailed to set fan speed, exiting!\x1b[0m")
 					print("\x1b[01;31mReason: %s != %s\x1b[0m" % (res[1], res[2]));
 					quit(-1)
 				lastTemp = temp
-			sleep(3)
+			sleep(2)
 	except KeyboardInterrupt:
 		print("\x1b[01;31mExiting now!\x1b[0m")
 		quit(1)

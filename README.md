@@ -29,3 +29,4 @@ Refer to [nvfan.py](https://github.com/abc123me/Nividia-Fancontrol/blob/master/n
 
 # Contributors
 [mstrobl2](https://github.com/mstrobl2) Fixed a bug in version checking, better defaults
+[peos3](https://github.com/peos3) Improved fan speed calculations

@@ -22,6 +22,7 @@ But please don't commit these changes, because the fan curve is already decent!
 ## Tested configurations
 - Ubuntu with GTX760 and GTX1060 6GB (No problems)
 - LXDE with GTX1060 6GB (No problems)
+- Zotac RTX 2080 Amp Maxx (Not sure, somebody else got it working)
 - Everything else is untested (however it will probably work)
 
 # Documentation

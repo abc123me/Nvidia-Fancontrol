@@ -40,7 +40,7 @@ def trySetNvidiaSetting(attrLoc, attrName, val):
 	val = str(val)
 	attrArg = '[' + attrLoc + ']/' + attrName + '=' + val
 	result = execCmd(['nvidia-settings', '-a', attrArg])
-	cout = result[1].strip().replace(' ', '')
+	cout = result[1].strip().replace('\n', '').replace(' ', '')
 	display = getXDisplay()
 	check = 'Attribute\'' + attrName + '\'(' + _hostName + display + '[' + attrLoc + '])assignedvalue' + val + '.'
 	return (cout == check, cout, check, result[2])
@@ -54,8 +54,8 @@ def trySetFanControlEnabled(enabled, gpu=0):
 #The legacy variable can be determined by shouldUseLegacyFanSpeed()
 #Read more here https://wiki.archlinux.org/index.php/NVIDIA/Tips_and_tricks#Set_fan_speed_at_login
 def trySetFanSpeed(speed, fan=0, legacy=False):
-	if(speed > 100):
-		speed = 100
+	if(speed > 80):
+		speed = 80
 	if(speed < 0):
 		speed = 0
 	attrName = 'GPUTargetFanSpeed'
@@ -67,20 +67,27 @@ def trySetFanSpeed(speed, fan=0, legacy=False):
 def shouldUseLegacyFanSpeed(gpu=0):
 	return getDriverVersion(gpu) <= 349.16
 #Fan curve linearly interpolates against a list fo tuples
-def interpFanCurve(fanCurve, temp):
-	last = (0, 0)
-	for i in range(0, len(fanCurve)):
-		cur = fanCurve[i]
-		tMin = last[0]
-		tMax = cur[0]
-		if(temp >= tMin and temp <= tMax):
-			sMin = last[1]
-			sMax = cur[1]
-			m = (sMax - sMin) / (tMax - tMin)
-			b = sMin - m * tMin
-			return m * temp + b
-		last = cur
-	return 100
+def interpFanCurve(fanCurve, temp, incMode):
+	if(incMode and temp < fanCurve[0][0]):
+		return 0
+	elif(not incMode and temp < fanCurve[0][0] - 3):
+		return 0
+	elif(not incMode and temp < fanCurve[0][0]):
+		return -1
+	else:
+		last = fanCurve[0]
+		for i in range(1, len(fanCurve)):
+			cur = fanCurve[i]
+			tMin = last[0]
+			tMax = cur[0]
+			if(temp >= tMin and temp <= tMax):
+				sMin = last[1]
+				sMax = cur[1]
+				m = (sMax - sMin) / (tMax - tMin)
+				b = sMin - m * tMin
+				return m * temp + b
+			last = cur
+	return 80
 
 class FanError(Exception):
 	def __init__(self, msg, reason="Unknown"):
@@ -103,7 +110,7 @@ class NVFan:
 		res = trySetFanControlEnabled(True)
 		if(not res[0]):
 			return (False, "Unable to enable fan control for gpu %i!" % (self._gpu))
-		res = trySetFanSpeed(100, legacy=self.isLegacy(), fan=self._fan)
+		res = trySetFanSpeed(30, legacy=self.isLegacy(), fan=self._fan)
 		if(not res[0]):
 			return (False, "Unable to set fan speed for gpu %i, fan %i!" % (self._gpu, self._fan))
 			trySetFanControlEnabled(False)

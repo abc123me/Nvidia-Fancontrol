@@ -28,7 +28,7 @@ But please don't commit these changes, because the fan curve is already decent!
 # Documentation
 Refer to [nvfan.py](https://github.com/abc123me/Nividia-Fancontrol/blob/master/nvfan.py)
 
-# Contributors
-[mstrobl2](https://github.com/mstrobl2) Fixed a bug in version checking, better defaults
-[peos3](https://github.com/peos3) Improved fan speed calculations
-[kostage](https://github.com/kostage) GNOME system tray icon
+# Contributors 
+1. [kostage](https://github.com/kostage) GNOME system tray icon
+2. [peos3](https://github.com/peos3) Improved fan speed calculations
+3. [mstrobl2](https://github.com/mstrobl2) Fixed a bug in version checking, better defaults

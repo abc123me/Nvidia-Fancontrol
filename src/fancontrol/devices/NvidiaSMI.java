@@ -40,6 +40,16 @@ public class NvidiaSMI{
 		@Override public void run() { smi.setManualFanControl(false); }
 	};
 	
+	private static final ArrayList<NvidiaSMI> gpus;
+	static {
+		if(!IS_SUPPORTED) gpus = null;
+		else gpus = new ArrayList<NvidiaSMI>();
+		int cnt = getGpuCount();
+		for(int i = 0; i < cnt; i++)
+			gpus.add(new NvidiaSMI(i));
+	}
+	public static final ArrayList<NvidiaSMI> getGPUs(){ return gpus; }
+	
 	public static void main(String[] args) throws Exception{
 		NvidiaSMI smi = new NvidiaSMI();
 		smi.printSystemStatistics();
@@ -52,17 +62,8 @@ public class NvidiaSMI{
 		smi.printSystemStatistics();
 	}
 	
-	public static final ArrayList<NvidiaSMI> probeGPUs(){
-		if(!IS_SUPPORTED) return null;
-		ArrayList<NvidiaSMI> out = new ArrayList<NvidiaSMI>();
-		int cnt = getGpuCount();
-		for(int i = 0; i < cnt; i++)
-			out.add(new NvidiaSMI(i));
-		return out;
-	}
-	
-	public NvidiaSMI() { this(0); }
-	public NvidiaSMI(int gpu) {
+	private NvidiaSMI() { this(0); }
+	private NvidiaSMI(int gpu) {
 		validateSystem();
 		this.gpu = gpu;
 		X11_DISPLAY = Utility.getX11Display();
@@ -103,6 +104,7 @@ public class NvidiaSMI{
 				@Override public boolean request() { return smi.setManualFanControl(true); }
 				@Override public boolean setFanSpeed(float to) { return smi.setFanSpeed(to); }
 				@Override public float getFanSpeed() { return smi.getFanSpeed() / 100.0f; }
+				@Override public ITempSensor[] getReleventTempSensors() { return new ITempSensor[] { coreSensor, memorySensor }; }
 			};
 		} else fanController = null;
 		Runtime.getRuntime().addShutdownHook(shutdownHook);

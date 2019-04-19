@@ -8,6 +8,7 @@ public interface IDevice {
 	public interface IFanControl extends IDevice {
 		public float getFanSpeed();							//Returns the fan speed as a percent between 0 and 1
 		public boolean setFanSpeed(float to);				//Sets the fan speed to a value between 0 and 1, returns true on success
+		public ITempSensor[] getReleventTempSensors();		//Returns an array of directly correlated temperature sensors
 	}
 	public interface ITempSensor extends IDevice {
 		public float getTemperatureC(); 					//Returns the temperature in celcius

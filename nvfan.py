@@ -80,7 +80,8 @@ def getDriverVersion(gpu=0):
 def trySetNvidiaSetting(attrLoc, attrName, val):
 	if _emulating: return (True, "Emulating", "Emulating", None)
 	val = str(val)
-	attrArg = '[' + attrLoc + ']/' + attrName + '=' + val
+	# {DISPLAY}/{attribute name}[{display devices}]={value}
+	attrArg = attrName + '[' + attrLoc + ']' + '=' + val
 	result = execCmd(['nvidia-settings', '-a', attrArg])
 	cout = result[1].strip().replace(' ', '')
 	display = getXDisplay()
@@ -114,7 +115,10 @@ def interpFanCurve(fanCurve, temp):
 			sMax = cur[1]
 			m = (sMax - sMin) / (tMax - tMin)
 			b = sMin - m * tMin
-			return m * temp + b
+			speed = m * temp + b
+			if(speed < 0) speed = 0
+			if(speed > 100) speed = 100
+			return speed
 		last = cur
 	return 50
 

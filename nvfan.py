@@ -102,7 +102,8 @@ def trySetFanSpeed(speed, fan=0, legacy=False):
 	return trySetNvidiaSetting('fan:' + str(fan), attrName, str(int(speed)))
 #Tells you whether or not you should use the legacy method of setting fan speed
 #Read more here https://wiki.archlinux.org/index.php/NVIDIA/Tips_and_tricks#Set_fan_speed_at_login
-def shouldUseLegacyFanSpeed(gpu=0): return getDriverVersion(gpu) <= 349.16
+def shouldUseLegacyFanSpeed(gpu=0):
+	return getDriverVersion(gpu) <= 349.16
 #Fan curve linearly interpolates against a list fo tuples
 def interpFanCurve(fanCurve, temp):
 	last = (0, 0)
@@ -116,8 +117,8 @@ def interpFanCurve(fanCurve, temp):
 			m = (sMax - sMin) / (tMax - tMin)
 			b = sMin - m * tMin
 			speed = m * temp + b
-			if(speed < 0) speed = 0
-			if(speed > 100) speed = 100
+			if(speed < 0): speed = 0
+			if(speed > 100): speed = 100
 			return speed
 		last = cur
 	return 50

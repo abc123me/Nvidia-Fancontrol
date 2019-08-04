@@ -54,7 +54,7 @@ if(__name__ == '__main__'):
 		res = trySetFanControlEnabled(True)
 		if(not res[0]):
 			print_color(RED, "Unable to enable fan control!")
-			print_color(RED, "Reason: %s != %s %s % (res[1], res[2], res[3])");
+			print_color(RED, "Reason: %s != %s %s" % (res[1], res[2], res[3]));
 			quit(1)
 		print_color(YELLOW, "Checking legacy")
 		legacyFanSpeed = shouldUseLegacyFanSpeed()
@@ -70,7 +70,7 @@ if(__name__ == '__main__'):
 		print_color(RED, "NVIDIA drivers are not installed, this tool only works with the proprietary NVIDIA drivers")
 		quit(1)
 	print_color(GREEN, "Fan control works")
-	
+
 	lastTemp = getGpuTemp() + 1
 
 	def shutdownHook():

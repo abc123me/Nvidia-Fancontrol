@@ -44,9 +44,16 @@ def help():
 
 if(__name__ == '__main__'):
 	import sys
+	update_rate = 1
 	if "-h" in sys.argv: help()
 	if "-e" in sys.argv: setEmulation(True, 420.0)
 	if "-v" in sys.argv: setVerboseExecution(True)
+	for i in range(0, len(sys.argv) - 1):
+		next = sys.argv[i + 1]
+		arg = sys.argv[i]
+		if arg == '-u':
+			update_rate = float(next)
+			print_color(BLUE, "Update rate set to %.1fs" % update_rate)
 	speed = 0.0
 	temp = 0.0
 	try:
@@ -107,7 +114,7 @@ if(__name__ == '__main__'):
 					print_color(RED, "Reason: %s != %s % (res[1], res[2])");
 					quit(-1)
 				lastTemp = temp
-				sleep(1)
+				sleep(update_rate)
 	except KeyboardInterrupt:
 		print_color(RED, "Exiting now!")
 		quit(1)

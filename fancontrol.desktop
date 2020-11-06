@@ -1,0 +1,11 @@
+
+[Desktop Entry]
+Type=Application
+Exec=python3 /usr/local/fancontrol/main.py
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_GB]=Fan Control
+Name=Fan Control
+Comment[en_GB]=Launches NVIDIA fan control
+Comment=Launches NVIDIA fan control

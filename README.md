@@ -1,7 +1,8 @@
 # Nvidia-Fancontrol
 It's a script that controls the fan on a nvidia graphics card
 
-I currently do not have time or a machine to test this on, if you would be looking to take ownership of this project consider contacting me.
+I currently do not have the time or a machine to test this on, 
+If you would be looking to take ownership of this project consider contacting me.
 
 ## Progress
 Currently it is in its very early stages but still usable

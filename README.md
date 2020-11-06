@@ -5,8 +5,7 @@ I currently do not have the time or a machine to continue development of this on
 If you would be looking to continue developing this project consider contacting me.
 
 ## Progress
-Currently it is in its very early stages but still usable
-(I'm working on making it better)
+Currently it is in its early stages but usable
 ### TODO
 - Rewrite in C/C++ (in progress)
   - I already have a nice Thinkpad fan control program that I want it to be merged with
@@ -27,6 +26,7 @@ But please don't commit these changes, because the fan curve is already decent!
 - LXDE with GTX1060 6GB (No problems)
 - Zotac RTX 2080 Amp Maxx (Not sure, somebody else got it working)
 - Everything else is untested (however it will probably work)
+- Headless enviroments will not work, you need to make a virtual X display with `xvfb`
 
 # Documentation
 Refer to [nvfan.py](https://github.com/abc123me/Nividia-Fancontrol/blob/master/nvfan.py)
